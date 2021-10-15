@@ -15,7 +15,7 @@ export const getById = (_id) => {
             console.log(objectId)
             db.collection(QUIZ_COLLECTION).find({ "_id": objectId }).toArray((error, result) => {  
                 if (error) {
-                    console.log('Falha ao buscar o quiz')   
+                    console.log('Falha ao buscar o quiz')
                     reject(error)
                 } else {
                     console.log('Sucesso ao buscar o quiz')
