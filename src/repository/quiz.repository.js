@@ -27,10 +27,10 @@ export const getById = (_id) => {
     })
 }
 
-export const getToken = async (_id) => {
+export const getContactInfo = async (_id) => {
     return new Promise((resolve, reject) => {
         try {
-            console.log('Buscando token por id do quiz')
+            console.log('Buscando informações por id do quiz')
             const objectId = new mongoose.Types.ObjectId(_id)
             db.mongo.connect(db.uri, async (error, db) => {
                 if (error)
@@ -39,12 +39,16 @@ export const getToken = async (_id) => {
                 console.log(objectId)
                 db.collection(QUIZ_COLLECTION).find({ "_id": objectId }).toArray((error, result) => {  
                     if (error) {
-                        console.log('Falha ao buscar token do quiz')   
+                        console.log('Falha ao buscar informações do quiz')   
                         reject(error)
                     } else {
-                        console.log('Sucesso ao buscar token do quiz')
-                        const token = result[0].token
-                        resolve(token)
+                        console.log('Sucesso ao buscar informações do quiz')
+                        const quiz = result[0]
+                        const info = { 
+                            token: quiz.token,
+                            listId: quiz.listId
+                         }
+                        resolve(info)
                     }
                     db.close()
                   })

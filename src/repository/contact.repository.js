@@ -17,7 +17,8 @@ export const create = async (name, email, token) => {
                 })
             }
 
-            fetch('https://lifeandmoney.api-us1.com/api/3/contacts', opt).then(response => {
+            fetch('https://lifeandmoney.api-us1.com/api/3/contacts', opt).then(async (response )=> {
+                const result = await response.json()
                 switch(response.status) {
                     case 403:
                         console.log('status: wrong token')
@@ -27,12 +28,40 @@ export const create = async (name, email, token) => {
                         return reject({ status: 'duplicated'})
                     case 201:
                         console.log('status: success')
-                        return resolve({ status: 'success'})
+                        return resolve({ status: 'success', contactId: result.contact.id})
                     default:
                         console.log('status: fail')
                         console.log(response)
                         return reject({ status: 'fail'})
                 }   
+            })
+        } catch (error) {
+            console.log('status: fail')
+            return reject({ status: 'fail'})
+        }
+})}
+
+export const subscribeToList = async (listId, contactId, token) => {
+    return new Promise((resolve, reject) => {
+        try {
+            const opt = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Api-Token': token
+                },
+                body: JSON.stringify({
+                    contactList: {
+                        list: listId,
+                        contact: contactId,
+                        status: 1
+                    }
+                })
+            }
+
+            fetch('https://lifeandmoney.api-us1.com/api/3/contactLists', opt).then(response => {
+                console.log(response.status)
+                return resolve({ status: response.status})
             })
         } catch (error) {
             console.log('status: fail')
