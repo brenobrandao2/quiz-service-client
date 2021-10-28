@@ -1,6 +1,6 @@
 import fetch from "cross-fetch"
 
-export const create = async (name, email, token) => {
+export const create = async (name, email, token, apiUrl) => {
     return new Promise((resolve, reject) => {
         try {
             const opt = {
@@ -17,7 +17,7 @@ export const create = async (name, email, token) => {
                 })
             }
 
-            fetch('https://lifeandmoney.api-us1.com/api/3/contacts', opt).then(async (response )=> {
+            fetch(`${apiUrl}/api/3/contacts`, opt).then(async (response )=> {
                 const result = await response.json()
                 switch(response.status) {
                     case 403:
@@ -41,7 +41,7 @@ export const create = async (name, email, token) => {
         }
 })}
 
-export const subscribeToList = async (listId, contactId, token) => {
+export const subscribeToList = async (listId, contactId, token, apiUrl) => {
     return new Promise((resolve, reject) => {
         try {
             const opt = {
@@ -59,7 +59,7 @@ export const subscribeToList = async (listId, contactId, token) => {
                 })
             }
 
-            fetch('https://lifeandmoney.api-us1.com/api/3/contactLists', opt).then(response => {
+            fetch(`${apiUrl}/api/3/contactLists`, opt).then(response => {
                 console.log(response.status)
                 return resolve({ status: response.status})
             })

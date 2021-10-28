@@ -46,7 +46,8 @@ export const getContactInfo = async (_id) => {
                         const quiz = result[0]
                         const info = { 
                             token: quiz.token,
-                            listId: quiz.listId
+                            listId: quiz.listId,
+                            apiUrl: quiz.apiUrl
                          }
                         resolve(info)
                     }

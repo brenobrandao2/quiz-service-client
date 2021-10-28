@@ -8,8 +8,8 @@ router.post('/create', async (req, res) => {
     try {
         const { name, email, id_quiz } = req.body
         const info = await getContactInfo(id_quiz)
-        const result = await create(name, email, info.token)
-        await subscribeToList(info.listId, result.contactId, info.token)
+        const result = await create(name, email, info.token, info.apiUrl)
+        await subscribeToList(info.listId, result.contactId, info.token, info.apiUrl)
         res.json({ ...result })
     } catch (error) {
         console.log(error)
