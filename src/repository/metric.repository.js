@@ -21,16 +21,14 @@ export const registerMetric = async (id_quiz, data, acesso, pergunta, resposta, 
                     lead,
                 }
                 
-                console.log(metrica)
-                
             db.collection(QUIZ_METRICAS_COLLECTION).insertOne(metrica).then((result) => {
                 console.log('Sucesso ao registrar métrica')
                 resolve(result)
-                db.close()
+                // db.close()
             }).catch((error) => {
                 console.log('Falha ao registrar métrica')
                 reject(error)
-                db.close()
+                // db.close()
             })
         })
     })

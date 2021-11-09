@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getById } from "../repository/quiz.repository.js"
+import { getById, getImages } from "../repository/quiz.repository.js"
 import { registerMetric } from '../repository/metric.repository.js'
 import multer from "multer"
 
@@ -25,6 +25,16 @@ router.post('/registerMetric', async (req, res) => {
         const result = await registerMetric(id_quiz, data, acesso, pergunta, resposta, lead)
 
         res.send(result)
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+})
+
+router.get('/getImages', async (req, res) => {
+    try {
+        const allImages = await getImages()
+        res.send(allImages)
     } catch (error) {
         console.log(error)
         res.send(error)

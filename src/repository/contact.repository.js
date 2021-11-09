@@ -1,8 +1,10 @@
 import fetch from "cross-fetch"
+import { increaseDuplication } from "./quiz.repository.js"
 
-export const create = async (name, email, token, apiUrl) => {
+export const create = async (name, email, token, apiUrl, id_quiz) => {
     return new Promise((resolve, reject) => {
         try {
+            console.log('Criando contato na Activecampaign')
             const opt = {
                 method: 'POST',
                 headers: {
@@ -25,6 +27,7 @@ export const create = async (name, email, token, apiUrl) => {
                         return reject({ status: 'wrong token'})
                     case 422:
                         console.log('status: duplicated')
+                        await increaseDuplication(id_quiz)
                         return reject({ status: 'duplicated'})
                     case 201:
                         console.log('status: success')
@@ -44,6 +47,7 @@ export const create = async (name, email, token, apiUrl) => {
 export const subscribeToList = async (listId, contactId, token, apiUrl) => {
     return new Promise((resolve, reject) => {
         try {
+            console.log('Inserindo contato a uma lista na Activecampaign')
             const opt = {
                 method: 'POST',
                 headers: {
