@@ -1,4 +1,5 @@
 import fetch from "cross-fetch"
+import { registerMetric } from "./metric.repository.js"
 import { increaseDuplication } from "./quiz.repository.js"
 
 export const create = async (name, email, token, apiUrl, id_quiz) => {
@@ -31,6 +32,7 @@ export const create = async (name, email, token, apiUrl, id_quiz) => {
                         return reject({ status: 'duplicated'})
                     case 201:
                         console.log('status: success')
+                        registerMetric(id_quiz, new Date(), 0, '', '', 1)
                         return resolve({ status: 'success', contactId: result.contact.id})
                     default:
                         console.log('status: fail')
